@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Service\FooService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Traits\ApiResponse;
 
 /**
  * @Route("/api")
  */
 class FooController extends AbstractController
 {
+    use ApiResponse;
+
     private $fooService;
 
     public function __construct(FooService $fooService)
@@ -25,6 +28,6 @@ class FooController extends AbstractController
     {
         $allFoos = $this->fooService->getAll();
 
-        print_r($allFoos);die;
+        return $this->sendSuccessResponse($allFoos, 'Data has been succesfully retrieved');
     }
 }
